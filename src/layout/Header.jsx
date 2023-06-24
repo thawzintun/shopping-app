@@ -1,14 +1,14 @@
 import React from "react";
-import Nav from "../components/Nav";
 import Summary from "../components/Summary";
+import Nav from "../components/Nav";
 
-const Header = ({ showCartHandler }) => {
-    return (
-        <>
-            <Nav showCartHandler={showCartHandler} />
-            <Summary />
-        </>
-    );
+const Header = (props) => {
+  return (
+    <section>
+      <Nav showCartHandler={props.showCartHandler} />
+      <Summary />
+    </section>
+  );
 };
 
 export default Header;

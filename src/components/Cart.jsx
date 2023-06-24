@@ -1,50 +1,50 @@
-import React from "react";
 import CartItem from "./CartItem";
+import { useContext } from "react";
+import { itemContext } from "../store/itemContext";
 
-const Cart = ({ hideCartHandler }) => {
-    const fruits = [
-        {
-            id: 1,
-            price: 10.98,
-            name: "Banana",
-            description: "Lorem ipsum dolor sit amet.",
-            quantity: 3,
-        },
-        {
-            id: 2,
-            price: 9.89,
-            name: "Apple",
-            description: "Lorem ipsum dolor sit amet.",
-            quantity: 1,
-        },
-        {
-            id: 3,
-            price: 12.49,
-            name: "Kiwi",
-            description: "Lorem ipsum dolor sit amet.",
-            quantity: 5,
-        },
-    ];
+const Cart = (props) => {
+  const { items, totalAmount } = useContext(itemContext);
 
-    return (
-        <section className="cart-box">
-            <h2>Cart</h2>
-            {fruits.map((fruit) => (
-                <CartItem key={fruit.id} fruit={fruit} />
+  const totalPrice = `$${totalAmount.toFixed(2)}`;
+  return (
+    <section className="cart-box">
+      <h2>Your cart items are here</h2>
+      <section className="overflow-ctr">
+        {items.length < 1 ? (
+          <h1 className="no-item">No items in your cart !!</h1>
+        ) : (
+          <>
+            {items.map((fruit) => (
+              <CartItem key={fruit.id} fruit={fruit} />
             ))}
-            <hr />
-            <div className="total">
-                <h3>Total Price</h3>
-                <p>$49.89</p>
-            </div>
-            <div className="btns">
-                <button className="close-btn" onClick={hideCartHandler}>
-                    Close
-                </button>
-                <button className="order-btn">Order</button>
-            </div>
-        </section>
-    );
+          </>
+        )}
+      </section>
+
+      <hr />
+      <div className="total">
+        <h3>Total price</h3>
+        <p>{totalPrice}</p>
+      </div>
+      <div className="btns">
+        <button className="close-btn" onClick={props.hideCartHandler}>
+          Close
+        </button>
+        {items.length < 1 ? (
+          <></>
+        ) : (
+          <button
+            className="order-btn"
+            onClick={() => {
+              alert("ordered !!");
+            }}
+          >
+            Order
+          </button>
+        )}
+      </div>
+    </section>
+  );
 };
 
 export default Cart;
